@@ -1,0 +1,11 @@
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/manim_physics/__init__.py
+src/manim_physics.egg-info/PKG-INFO
+src/manim_physics.egg-info/SOURCES.txt
+src/manim_physics.egg-info/dependency_links.txt
+src/manim_physics.egg-info/requires.txt
+src/manim_physics.egg-info/top_level.txt
