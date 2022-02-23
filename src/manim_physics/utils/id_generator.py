@@ -1,5 +1,5 @@
 class Id_generator:
-    counter : int = 0
+    counter: int = 0
 
     @staticmethod
     def get_new_id():
