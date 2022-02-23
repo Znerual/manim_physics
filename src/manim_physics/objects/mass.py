@@ -5,7 +5,7 @@ Docstring
 import numpy as np
 
 from dataclasses import dataclass, field, InitVar
-from numpy import typing
+from numpy.typing import NDArray
 from manim import *
 
 from ..utils.id_generator import Id_generator
@@ -14,16 +14,16 @@ from ..utils.id_generator import Id_generator
 class Mass(Circle):
     id_hash: int = field(init=False, default_factory=Id_generator.get_new_id)
     mass: float
-    position: InitVar[typing.NDArray[float]] = field(default=np.array([0.0,0.0,0.0]), init=True)
-    velocity: typing.NDArray[float] = field(default=np.array([0.0, 0.0, 0.0]), compare=True, hash=False)
-    force: typing.NDArray[float] = field(default=np.array([0.0, 0.0, 0.0]), compare=True, hash=False)
+    position: InitVar[NDArray[float]] = field(default=np.array([0.0,0.0,0.0]), init=True)
+    velocity: NDArray[float] = field(default=np.array([0.0, 0.0, 0.0]), compare=True, hash=False)
+    force: NDArray[float] = field(default=np.array([0.0, 0.0, 0.0]), compare=True, hash=False)
     radius: float = field(default=None)
     label_text: str = field(default=None)
     label_scale_value: float = field(default=0.8)
     fill_opacity: float = field(default=1)
     stroke_width: float = field(default=3)
     fill_color: str = field(default=None)
-    sheen_direciton: typing.NDArray[float] = field(default=UP)
+    sheen_direction: NDArray[float] = field(default=UP)
     sheen_factor: float = field(default=0.5)
 
     def __hash__(self):
@@ -51,12 +51,16 @@ class Mass(Circle):
             object.__setattr__(self, "label_text", self.mass_to_label_text(self.mass))
 
         super(Mass, self).__init__(radius=self.radius, color=self.fill_color, fill_opacity=self.fill_opacity,
-                                   stroke_width=self.stroke_width, sheen_direction=self.sheen_direciton,
+                                   stroke_width=self.stroke_width, sheen_direction=self.sheen_direction,
                                    sheen_factor=self.sheen_factor)
 
         self.move_to(position)
-        self.label = self.get_label()
-        self.add(self.label)
+
+        # add label
+        if self.label_text:
+            self.label = self.get_label()
+            self.add(self.label)
+
         self.add_updater(update_position)
 
     def get_points_defining_boundary(self):
